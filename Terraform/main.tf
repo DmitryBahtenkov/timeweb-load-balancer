@@ -29,6 +29,29 @@ resource "twc_lb" "load-balancer" {
     
     project_id = data.twc_projects.articles.id
     preset_id = data.twc_lb_preset.lb-preset.id
+
+    health_check {
+      proto = "tcp"
+      port = 80
+    }
     
     ips = var.lb-ips
+}
+
+resource "twc_lb_rule" "lb-rule" {
+  lb_id = resource.twc_lb.load-balancer.id
+
+  balancer_proto = "http"
+  balancer_port = 80
+  server_proto = "http"
+  server_port = 80
+}
+
+resource "twc_lb_rule" "lb-second-rule" {
+  lb_id = resource.twc_lb.load-balancer.id
+
+  balancer_proto = "http"
+  balancer_port = 81
+  server_proto = "http"
+  server_port = 81
 }

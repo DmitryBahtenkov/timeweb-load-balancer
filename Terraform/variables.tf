@@ -4,5 +4,5 @@ variable "tw_token" {
 }
 
 variable "lb-ips" {
-    type = set()
+    type = set(string)
 }
